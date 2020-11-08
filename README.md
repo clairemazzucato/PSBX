@@ -11,7 +11,7 @@ Le tutoriel sur la manipulation des facteurs est réalisé par Thuy Aufrere et m
 
 Le dossier concernant l'utilisation de packages sur R est réalisé par Adrien Jupiter et moi, Claire Mazzucato. 
 
-Toute amélioration et remarque sont la bienvenue. 
+Toute améliorations et remarques sont la bienvenue. 
 
 
 ## UPDATES
