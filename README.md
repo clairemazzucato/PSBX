@@ -1,4 +1,4 @@
-# READ ME
+## PSBX
 
 Bonjour à tous, ce repository est consacré aux partages de tutoriels concernant l'utilisation de packages sur R et un tutoriel sur la manipulation des facteurs dans le cadre de la formation en Data Management au sein de PSB. 
 
