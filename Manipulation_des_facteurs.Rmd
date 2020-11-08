@@ -13,7 +13,6 @@ pip install foobar
 ## Création de facteurs
 
 ```python
-import foobar
 
 foobar.pluralize('word') # returns 'words'
 foobar.pluralize('goose') # returns 'geese'
