@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <p align="center">
   <img src="/Users/clairemazzucato/Documents/GitHub/PSBX/PSB_logo.jpg" />
 </p>
@@ -104,11 +103,6 @@ Levels: 1 2 3 4 5 6
 
 
 
-=======
-# Manipulation des facteurs
-
-Foobar is a Python library for dealing with word pluralization.
->>>>>>> origin/main
 
 ## Définition
 
@@ -117,16 +111,12 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 ```bash
 pip install foobar
 ```
-<<<<<<< HEAD
 ```python
 
 foobar.pluralize('word') # returns 'words'
 foobar.pluralize('goose') # returns 'geese'
 foobar.singularize('phenomena') # returns 'phenomenon'
 ```
-=======
-
->>>>>>> origin/main
 ## Création de facteurs
 
 ```python
