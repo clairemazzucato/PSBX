@@ -1,5 +1,5 @@
 
-![alt text](/Users/clairemazzucato/Documents/GitHub/PSBX/PSB_logo.jpg "Title")
+![alt text](https://upload.wikimedia.org/wikipedia/commons/9/92/PSB_Paris_School_of_Business%2C_logo_cartouche_bleu%2C_2016.jpg "Title")
 
 # Manipulation des facteurs
 
