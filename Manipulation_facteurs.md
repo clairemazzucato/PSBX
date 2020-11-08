@@ -3,20 +3,20 @@
 
 # Manipulation des facteurs
 
-###Qu'est-ce que c'est ?
+### Qu'est-ce que c'est ?
  
 Les facteurs sont des vecteurs un peu particuliers, facilitant la manipulation de données qualitatives (qu’elles soient numériques ou caractères).
 En effet, en plus de stocker les différents éléments comme un vecteur classique, il stocke également l’ensemble des différentes modalités possibles dans un attribut accessible via la commande `levels`.
 
 Ils forment une classe d’objets et bénéficient de traitements particuliers lors de leur manipulation et lors de l’utilisation de certaines fonctions. Les facteurs peuvent être non ordonnés (homme, femme) ou ordonnés (niveaux de ski).
 
-###Dans quel cas l'utiliser dans R ?
+### Dans quel cas l'utiliser dans R ?
  
 Pour encoder les réponses à une question ferme (c'est-à-dire qu'une question ne laissant à son destinataire que des choix prédéfinis), on utilisera les facteurs. En effet, en statistique, un facteur est typiquement utilisé pour stocker les valeurs observées d’une variable qualitative ou catégorique.
  
 Pour illustrer le fonctionnement des facteurs, nous allons créer un facteur avec des attributs par défaut, puis des niveaux personnalisés, puis des niveaux et des étiquettes personnalisés.
 
-###Création des facteurs
+### Création des facteurs
 
 **3 fonctions pour créer les facteurs**
  
@@ -62,7 +62,7 @@ niveau
 # Levels: débutant < moyen < champion 
 ```
 
-###Niveaux d’un facteur
+### Niveaux d’un facteur
 
 Les facteurs prennent leurs valeurs dans un ensemble de modalités prédéfinies (niveaux), et ne peuvent en prendre d’autres.
 Pour connaitre les niveaux d’un facteur, on utilise la fonction levels.
@@ -87,7 +87,7 @@ dé
 [1] 3 2 2 1 3 1 3 1
 Levels: 1 2 3 4 5 6
 ```
-###Renommer les modalités d’un facteur
+### Renommer les modalités d’un facteur
 
 On peut renommer le facteur en utilisant la fonction ```levels```
 
@@ -99,7 +99,7 @@ sexe
 Levels: Femme Homme
 ````
 
-###Modifier les valeurs d’un facteur
+### Modifier les valeurs d’un facteur
 
 On peut modifier la valeur d’un facteur facilement par indexation comme pour un vecteur avec la fonction ```levels```
 
@@ -119,7 +119,7 @@ dé
 Levels: 1 2 3 4 5 6
 ```
 
-###L’ordre des niveaux
+### L’ordre des niveaux
 
 Par défaut, les niveaux d’un facteur nouvellement créés sont classés par ordre alphanumérique croissant ou selon l’ordre qui figure dans l’option ```levels```. Cet ordre est utilisé chaque fois que le facteur est employé.
 
