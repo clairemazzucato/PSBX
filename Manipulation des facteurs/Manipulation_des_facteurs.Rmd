@@ -36,8 +36,7 @@ Pour illustrer le fonctionnement des facteurs, nous allons créer un facteur ave
 sexe <- factor(c("H", "H", "F", "H", "H", "F", "F", "F"))
 sexe
 ```
-[1] H H F H H F F F
-Levels : F H
+
 
 
  - **2.	La fonction `as.factor`**
@@ -46,15 +45,13 @@ Levels : F H
 salto <- c(1:5,5:1)
 salto
 ```
-[1] 1 2 3 4 5 5 4 3 2 1
+
 
 ```{r}
 salto.f <- as.factor(salto)
 salto.f
 ```
 
-[1] 1 2 3 4 5 5 4 3 2 1
-Levels: 1 2 3 4 5
 
  - **3.	La fonction `ordered`**
 
