@@ -24,7 +24,7 @@ La raison pour laquelle il est si populaire est la rapidité d'exécution sur de
 L'installation du package `data.table` n'est pas différente des autres packages R. Il est recommandé d'exécuter `install.packages()` pour obtenir la dernière version.
 
 ```{r}
-install.packages('data.table')
+#install.packages('data.table')
 ```
 
 ### Usage
@@ -86,10 +86,8 @@ Ainsi, lors du filtrage, il suffit de faire passer les noms des colonnes entre l
 ![](/Users/clairemazzucato/Desktop/PSB x EFREI/R/Packages/DTsyntax.jpg)
 
 ```{r}
-# dataframe syntaxe
 mtcars[mtcars$cyl == 6 & mtcars$gear == 4, ]
 
-# datatable syntaxe
 mtcars_dt[cyl==6 & gear==4, ]
 ```
 ### Séléctionner des colonnes
@@ -130,19 +128,6 @@ myvar <- "mpg"
 mtcars_dt[, myvar, with=F]
 ```
 
-Le même principe s'applique si vous avez plusieurs colonnes à sélectionner.
-
-```{r}
-columns <- c('mpg', 'cyl', 'disp')
-mtcars_dt[, columns]
-#> [1] "mpg"  "cyl"  "disp"
-```
-
-Pour que la commande ci-dessus fonctionne, vous devez passer avec=FALSE entres crochets
-```{r}
-mtcars_dt[, columns, with=FALSE]
-```
-
 ### Renommer des colonnes
 
 La fonction `setnames()` est utilisée pour renommer les colonnes.
@@ -152,7 +137,6 @@ Elle prend le `data.table` (ou data.frame), le nom actuel et le nouveau nom comm
 ```{r}
 setnames(mtcars_dt, 'vs', 'engine_type')
 colnames(mtcars_dt)
-#> <'vs' column is renamed to 'engine_type'.
 ```
 
 On note ici que la colonne a été renommée pour engine_type.
@@ -166,9 +150,7 @@ DT[ , Y := shift(A, 1, type="lead")]
 ### Regrouper
 
 En base R, le regroupement est effectué à l'aide de la fonction `aggregate()`.  C'est un peu lourd et difficile de se souvenir de la syntaxe. Toutes les fonctionnalités peuvent être facilement réalisées en utilisant l'argument "by" entre crochets.
-Par exemple, dans les données `mtcars`, comment obtenir le kilométrage moyen pour chaque type de cylindre ?
-
-Il suffit d'utiliser = 'cyl' entre les crochets.
+Par exemple, dans les données `mtcars`, on peut obtenir le kilométrage moyen pour chaque type de cylindre en utilisant 'cyl' entre les crochets.
 
 ```{r}
 mtcars_dt[, .(mean_mileage=mean(mpg)), by=cyl]
@@ -186,23 +168,20 @@ dt3 <- mtcars_dt[2:12, .(carname, disp)]
 ```{r}
 # Inner Join
 merge(dt1, dt2, by='carname')
-#> <returns 6 rows>
 
 # Left Join
 merge(dt1, dt2, by='carname', all.x = T)
-#> <returns 21 rows>
 
 # Outer Join
 merge(dt1, dt2, by='carname', all = T)  
-#> <returns 25 rows>
 ```
 
 
 ### Tableaux croisés dynamiques
 
-Le `dcast.data.table()` est la fonction utilisée pour faire des opérations de type tableau croisé dynamique comme on le voit dans les logiciels de feuille de calcul comme Excel ou Google.
+La fonction `dcast.data.table()` est utilisée pour faire des opérations de type tableau croisé dynamique comme on le voit sur Microsoft Excel ou Google Spreadsheets.
 
-L'avantage est que la fonction `dcast.data.table()` fonctionne aussi bien sur l'objet `data.frame`.
+L'avantage est que la fonction `dcast.data.table()` fonctionne aussi bien avec `data.frame`.
 
 Créons un tableau croisé dynamique montrant le kilométrage moyen (`mpg`) des cylindres par rapport au carburateur (`Carb`)
 
