@@ -1,6 +1,6 @@
 ---
 title: "Tuto Package NetworkD3"
-author: "Claire MAZZUCATO"
+author: "Claire MAZZUCATO & Adrien JUPITER"
 date: "21/12/2020"
 output:
   html_document:
