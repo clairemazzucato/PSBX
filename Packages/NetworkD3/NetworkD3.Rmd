@@ -1,0 +1,199 @@
+---
+title: "Tuto Package NetworkD3"
+author: "Claire MAZZUCATO & Adrien JUPITER"
+date: "21/12/2020"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+always_allow_html: yes
+---
+
+![PSB website.](/Users/clairemazzucato/Documents/PSB.jpg)
+
+# NetworkD3
+
+### Qu'est-ce que c'est ?
+ 
+Le package `NetworkD3` permet de créer un réseau JavaScript D3, un arbre, un dendrogramme et des graphes Sankey à partir de R.
+
+Il prend actuellement en charge les types de graphiques de réseau suivants :
+
+Force directed networks avec `simpleNetwork` et `forceNetwork`
+
+Les diagrammes Sankey avec `sankeyNetwork`
+
+Le réseau Radial avec `radialNetwork`
+
+
+### Pourquoi utiliser les réseaux ? 
+
+La notion de réseaux commence avec le célébre casse-tête de Königsberg posé par Euler en 1735. Il a prouvé qu'il était impossible de parcourir les sept ponts de cette ville de manière à ne les traverser qu'une seule fois.
+
+Il inventa le concept de graphe afin de représenter plus simplement la situation géographique de la ville. Chaque parcelle de terre est alors modélisé par un noeud et chaque lien représente un pont. Il le modélisa de la manière suivante: 
+
+![](/Users/clairemazzucato/Desktop/PSB x EFREI/R/Packages/Eulerrepresentation.png)
+
+### Pourquoi utiliser R pour l'analyse de réseaux ? 
+
+Divers outils sont disponibles pour l'analyse des réseaux. Certains d'entre eux sont des programmes autonomes, comme l'outil Pajek classique ou le plus récent Gephi, tandis que d'autres sont intégrés dans un environnement de programmation. Quelques exemples de ces dernières sont NetworkX en Python et igraph en R. 
+
+Plusieurs progiciels d'extension R mettent en œuvre un ou plusieurs algorithmes d'analyse de réseau ou fournissent des outils généraux pour manipuler les données de réseau et mettre en œuvre des algorithmes de réseau. R prend en charge des graphiques de haute qualité et pratiquement tous les formats de fichiers graphiques courants.
+Étant un langage de programmation complet, R offre une grande flexibilité pour la recherche sur les réseaux. Les nouveaux algorithmes d'analyse de réseau peuvent être rapidement prototypés en s'appuyant sur les package d'extension existants de la science des réseaux, dont le plus couramment utilisé est le package `igraph`. En plus des implémentations de méthodes classiques et récemment publiées d'analyse de réseau, `igraph` fournit des outils pour importer, manipuler et visualiser des graphes, et peut être utilisé comme plateforme pour de nouveaux algorithmes
+
+### Installation
+
+Le `networkD3` fonctionne très bien avec la version la plus récente de RStudio. Lorsque vous utilisez cette version de RStudio, des graphiques apparaissent dans la fenêtre de visualisation. Non seulement cela vous permet de voir et de modifier vos graphiques, mais vous pouvez également les exporter vers le presse-papiers ou vers un fichier PNG/JPEG/TIFF/etc.
+
+
+```{r}
+#install.packages('networkD3')
+```
+
+Dans ce tutoriel, nous allons voir les 4 types de graphiques proposés via le package NetworkD3: 
+
+### Simple Network
+
+Pour pouvons modéliser le Simple Network en se basant sur le réseau social d'une groupe de camarades de la promotion Msc Data Management. En effet, chaque membre de la classe désigne 3 personnes avec qui il se considère le plus proche. Nous obtenons le réseau social suivant: 
+```{r}
+# Chargement du package 
+library(networkD3)
+
+# Création de données fictives
+src <- c("Claire", "Claire", "Claire", "Adrien",
+        "Adrien", "Adrien", "Claude", "Claude", "Claude","Siva", "Siva", "Siva","Thuy","Thuy","Thuy")
+target <- c("Adrien", "Claude", "Siva", "Arnaud",
+            "Siva", "Claude", "Claire", "Arnaud", "Siva","Claude","Adrien","Claire","Claire","Arnaud","Adrien")
+networkData <- data.frame(src, target)
+
+# Plot
+simpleNetwork(networkData)
+```
+
+### Force Network
+On utilise `forceNetwork` pour avoir plus de contrôle sur l'apparition du réseau dirigé forcé et pour tracer des réseaux plus compliqués. Voici un exemple :
+
+```{r}
+# Chargement de données
+data(MisLinks)
+data(MisNodes)
+
+# Plot
+forceNetwork(Links = MisLinks, Nodes = MisNodes,
+            Source = "source", Target = "target",
+            Value = "value", NodeID = "name",
+            Group = "group", opacity = 0.8)
+```
+
+
+### Sankey diagrammes 
+L'exemple ci-dessous montre comment les organigrammes du réseau Sankey peuvent être facilement générés dans R à l'aide du package networkD3, et peuvent être utiles pour illustrer les flux de préférences.
+
+Nous sommes intéressés de voir comment les résultats du vote des 12 régions britanniques ont contribué au résultat global du référendum, où le Royaume-Uni a voté pour quitter l'Union européenne par 17 410 742 voix contre 16 141 241.
+
+Nous commençons par charger les bibliothèques et lire les données brutes qui peuvent être obtenues sur le site de la Commission électorale.
+
+
+```{r}
+## chargement des librairies
+
+library(dplyr)
+library(networkD3)
+library(tidyr)
+
+# lire le dataset des résultats du referundum EU 
+refresults <- read.csv("https://data.london.gov.uk/download/eu-referendum-results/52dccf67-a2ab-4f43-a6ba-894aaeef169e/EU-referendum-result-data.csv")
+```
+
+```{r}
+head(refresults)
+```
+
+Nous regroupons les données par région, supprimer les données inutiles et les formater pour permettre la construction plus évidente d'un réseau Sankey.
+
+```{r}
+# aggregate by region
+
+results <- refresults %>% 
+  dplyr::group_by(Region) %>% 
+  dplyr::summarise(Remain = sum(Remain), Leave = sum(Leave))
+
+# format in prep for sankey diagram
+
+results <- tidyr::gather(results, result, vote, -Region)
+
+head(results)
+```
+
+Enfin, nous générons l'ensemble des nœuds et l'ensemble des liens pour le réseau Sankey.
+
+```{r}
+# création des noeuds
+
+regions <- unique(as.character(results$Region))
+nodes <- data.frame(node = c(0:13), 
+                     name = c(regions, "Leave", "Remain"))
+
+#création des liens
+
+results <- merge(results, nodes, by.x = "Region", by.y = "name")
+results <- merge(results, nodes, by.x = "result", by.y = "name")
+links <- results[ , c("node.x", "node.y", "vote")]
+colnames(links) <- c("source", "target", "value")
+```
+
+Nous avons maintenant les nœuds et les liens dans le format dont nous avons besoin.
+```{r}
+head(links)
+```
+
+```{r}
+head(links)
+```
+
+```{r}
+#draw sankey network
+
+networkD3::sankeyNetwork(Links = links, Nodes = nodes, Source = 'source', 
+                         Target = 'target', Value = 'value', NodeID = 'name',
+                         units = 'votes')
+```
+ 
+### Radial Network
+
+La fonction `radialNetwork` permet de modéliser un dataset sous forme d'arbre Reingold-Tilford comme avec l'exemple ci-dessous: 
+
+```{r}
+Flare <- jsonlite::fromJSON(
+  "https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json",
+  simplifyDataFrame = FALSE
+)
+
+hc <- hclust(dist(USArrests), "ave")
+
+radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
+radialNetwork(as.radialNetwork(hc))
+
+# and with a different font
+radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")
+
+diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
+diagonalNetwork(as.radialNetwork(hc), height = 700, margin = 50)
+```
+
+
+
+----------------------------------------------------------------------
+
+ 
+#### **Sources** :
+
+[Source CRAN](https://cran.r-project.org/web/packages/networkD3/networkD3.pdf)
+
+[Source Towards Data Science](https://towardsdatascience.com/using-networkd3-in-r-to-create-simple-and-clear-sankey-diagrams-48f8ba8a4ace)
+
+[Source Statistical Analysis of Network Data with R]
+
+[R Pubs](https://rpubs.com/keithmcnulty/brexitsankey)
+
+[Rdrr](https://rdrr.io/cran/networkD3/src/inst/examples/examples.R)
