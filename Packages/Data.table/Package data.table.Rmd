@@ -1,6 +1,6 @@
 ---
 title: "Tuto Package Data.table"
-author: "Claire MAZZUCATO"
+author: "Claire MAZZUCATO & Adrien JUPITER"
 date: "21/12/2020"
 output: pdf_document
 ---
