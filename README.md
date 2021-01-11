@@ -1,6 +1,6 @@
 # READ ME
 
-Bonjour à tous, ce repository est consacré aux partages de tutoriels concernant l'utilisation de packages sur R et un tutoriel sur la manipulation des facteurs dans le cadre de la formation en Data Management au sein de PSB. 
+Bonjour à tous, ce repository est consacré aux partages de tutoriels concernant l'utilisation de packages sur R, un tutoriel sur la manipulation des facteurs et l'analyse de papiers de thèse dans le cadre de la formation en Data Management au sein de PSB. 
 
 J'espère que ces informations vous serons intéréssantes. 
 
@@ -15,4 +15,4 @@ Toute améliorations et remarques sont la bienvenue.
 
 
 ## UPDATES
-Dernière mise à jour: 08 Novembre 2020.  
+Dernière mise à jour: 11 Janvier 2021.  
